@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import questionsApi from '../utils/Requests'
+import { QuestionType } from '../models/Category'
 
-const useQuestions = (link: string, questionIndex: number) => {
-    const [question, setQuestion] = useState('')
-    const [answers, setAnswers] = useState<string[]>([])
-    const [correctAnswer, setCorrectAnswer] = useState<string>('') 
-    const [type, setType] = useState<string>('Multiple Choice')
+const useQuestions = (link: string) => {
+    const [questions, setQuestions] = useState<QuestionType[]>()
 
     const getQuestionsData = async() => {
         const response = await questionsApi.get(link)
-        setQuestion(response.data.results[questionIndex].question)
-        const answers: string[] = response.data.results[questionIndex].incorrect_answers
-        answers.push(response.data.results[questionIndex].correct_answer)
-
-        setAnswers(answers)
-        setType(response.data.results[questionIndex].type)
-        setCorrectAnswer(response.data.results[questionIndex].correct_answer)
+        setQuestions(response.data.results)
     }
 
     useEffect(() => {
         getQuestionsData()
-    }, [link, questionIndex])
+    }, [link])
 
-    return {question, answers, correctAnswer, type}
+    return {questions}
 }
 
 export default useQuestions

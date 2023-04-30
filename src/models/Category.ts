@@ -27,3 +27,12 @@ export type ActionOptions = {
 export type Difficulty = 'Easy' | 'Medium' | 'Hard'
 
 export type QuestionTypes = 'Multiple Choice' | 'True/False'
+
+export interface QuestionType {
+    category: string,
+    correct_answer: string,
+    difficulty: string,
+    incorrect_answers: string[],
+    question: string,
+    type: string
+}
