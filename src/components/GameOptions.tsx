@@ -45,7 +45,7 @@ const GameOptions = ({navigation, route}: Props) => {
 
   const generateUrl = () => {
     const url = `?amount=${state.numberOfQuestions}&category=${route.params.category.category_id}&difficulty=${state.difficulty.toLowerCase()}&type=${mapDifficulty[state.quizType]}&encode=url3986`
-    navigation.navigate('Game', {link: url})
+    navigation.navigate('Game', {link: url, categoryName: route.params.category.category, totalQuestions: state.numberOfQuestions})
   }
 
   return (

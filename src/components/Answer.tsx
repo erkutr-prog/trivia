@@ -13,9 +13,10 @@ type Props = {
   answers: string[];
   type: string;
   correct: string;
+  answerCb: Function
 };
 
-const Answer = ({answers, type, correct}: Props) => {
+const Answer = ({answers, type, correct, answerCb}: Props) => {
   const [answered, setAnswered] = useState(false);
   const [selected, setSelected] = useState<string>('');
   const correct_answer = decodeURIComponent(correct);
@@ -23,6 +24,11 @@ const Answer = ({answers, type, correct}: Props) => {
     if (selected === '') {
         setAnswered(true);
         setSelected(answer);
+        setTimeout(() => {
+            answerCb()
+            setAnswered(false)
+            setSelected('')
+        }, 800)
     }
   };
 

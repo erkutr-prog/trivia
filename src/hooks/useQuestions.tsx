@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import questionsApi from '../utils/Requests'
 
-type Props = {}
-
-const useQuestions = (link: string) => {
+const useQuestions = (link: string, questionIndex: number) => {
     const [question, setQuestion] = useState('')
     const [answers, setAnswers] = useState<string[]>([])
     const [correctAnswer, setCorrectAnswer] = useState<string>('') 
@@ -12,18 +9,18 @@ const useQuestions = (link: string) => {
 
     const getQuestionsData = async() => {
         const response = await questionsApi.get(link)
-        setQuestion(response.data.results[0].question)
-        const answers: string[] = response.data.results[0].incorrect_answers
-        answers.push(response.data.results[0].correct_answer)
+        setQuestion(response.data.results[questionIndex].question)
+        const answers: string[] = response.data.results[questionIndex].incorrect_answers
+        answers.push(response.data.results[questionIndex].correct_answer)
 
         setAnswers(answers)
-        setType(response.data.results[0].type)
-        setCorrectAnswer(response.data.results[0].correct_answer)
+        setType(response.data.results[questionIndex].type)
+        setCorrectAnswer(response.data.results[questionIndex].correct_answer)
     }
 
     useEffect(() => {
         getQuestionsData()
-    }, [link])
+    }, [link, questionIndex])
 
     return {question, answers, correctAnswer, type}
 }

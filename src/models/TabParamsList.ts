@@ -1,4 +1,4 @@
-import { CategoryInformation } from "./Category"
+import { Categories, CategoryInformation } from "./Category"
 
 export type RootStackParamList = {
     Home: undefined,
@@ -8,5 +8,5 @@ export type RootStackParamList = {
 export type AppStackParamList = {
     Main: undefined,
     GameOptions: { category: CategoryInformation },
-    Game: { link: string }
+    Game: { link: string, categoryName: Categories, totalQuestions: number }
 }

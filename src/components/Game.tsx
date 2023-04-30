@@ -1,13 +1,7 @@
-import {View, Text, Dimensions} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {
-  CategoryInformation,
-  QuestionTypes,
-  QuizOptions,
-} from '../models/Category';
+import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamList} from '../models/TabParamsList';
-import questionsApi from '../utils/Requests';
 import Question from './Question';
 import Answer from './Answer';
 import useQuestions from '../hooks/useQuestions';
@@ -18,8 +12,10 @@ const {width, height} = Dimensions.get('window');
 type Props = NativeStackScreenProps<AppStackParamList, 'Game'>;
 
 const Game = ({route, navigation}: Props) => {
+  const [counter, setCounter] = useState(0)
   const {question, answers, correctAnswer, type} = useQuestions(
     route.params.link,
+    counter
   );
 
   return (
@@ -27,29 +23,14 @@ const Game = ({route, navigation}: Props) => {
       {question ? (
         <>
           <View
-            style={{
-              height: 30,
-              width: width,
-              flexDirection: 'row',
-              paddingHorizontal: 12,
-              paddingTop: 12,
-            }}>
+            style={styles.categoryContainer}>
             <Text
-              style={{
-                fontFamily: 'Rubik',
-                fontSize: 15,
-                fontWeight: '500',
-                alignSelf: 'center',
-              }}>
-              Kategori
+              style={styles.categoryText}>
+              {route.params.categoryName}
             </Text>
             <Text
-              style={{
-                marginLeft: 'auto',
-                alignSelf: 'center',
-                justifyContent: 'center',
-              }}>
-              1/10
+              style={styles.questionIndexText}>
+              {(counter + 1).toString()} / {route.params.totalQuestions.toString()}
             </Text>
           </View>
 
@@ -57,7 +38,7 @@ const Game = ({route, navigation}: Props) => {
             <Question questionText={question} />
           </View>
           <View style={{margin: 12}}>
-            <Answer answers={answers} type={type} correct={correctAnswer} />
+            <Answer answerCb={() => setCounter(counter + 1)} answers={answers} type={type} correct={correctAnswer} />
           </View>
         </>
       ) : (
@@ -68,5 +49,26 @@ const Game = ({route, navigation}: Props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+    categoryContainer: {
+        height: 30,
+        width: width,
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        paddingTop: 12,
+    },
+    categoryText: {
+        fontFamily: 'Rubik',
+        fontSize: 15,
+        fontWeight: '500',
+        alignSelf: 'center',
+    },
+    questionIndexText: {
+        marginLeft: 'auto',
+        alignSelf: 'center',
+        justifyContent: 'center',
+    }
+})
 
 export default Game;
