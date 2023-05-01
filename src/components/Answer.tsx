@@ -22,13 +22,13 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
   const correct_answer = decodeURIComponent(correct);
   const onAnswerPress = (answer: string) => {
     if (selected === '') {
-        setAnswered(true);
-        setSelected(answer);
-        setTimeout(() => {
-            answerCb(answer === correct_answer)
-            setAnswered(false)
-            setSelected('')
-        }, 800)
+      setAnswered(true);
+      setSelected(answer);
+      setTimeout(() => {
+        answerCb(answer === correct_answer);
+        setAnswered(false);
+        setSelected('');
+      }, 800);
     }
   };
 
@@ -56,22 +56,29 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingVertical: 12,
-        }}>
+        }}
+      >
         <TouchableHighlight
           onPress={() => onAnswerPress(decodeURIComponent(answers[0]))}
           underlayColor={'#fff'}
-          style={[styles.option, {backgroundColor: changeOptionColor(answers[0])}]}>
-          <Text
-            style={styles.optionText}>
+          style={[
+            styles.option,
+            {backgroundColor: changeOptionColor(answers[0])},
+          ]}
+        >
+          <Text style={styles.optionText}>
             {decodeURIComponent(answers[0])}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight
           onPress={() => onAnswerPress(decodeURIComponent(answers[1]))}
           underlayColor={'#fff'}
-          style={[styles.option, {backgroundColor: changeOptionColor(answers[1])}]}>
-          <Text
-            style={styles.optionText}>
+          style={[
+            styles.option,
+            {backgroundColor: changeOptionColor(answers[1])},
+          ]}
+        >
+          <Text style={styles.optionText}>
             {decodeURIComponent(answers[1])}
           </Text>
         </TouchableHighlight>
@@ -81,18 +88,24 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
           <TouchableHighlight
             onPress={() => onAnswerPress(decodeURIComponent(answers[2]))}
             underlayColor={'#fff'}
-            style={[styles.option, {backgroundColor: changeOptionColor(answers[2])}]}>
-            <Text
-              style={styles.optionText}>
+            style={[
+              styles.option,
+              {backgroundColor: changeOptionColor(answers[2])},
+            ]}
+          >
+            <Text style={styles.optionText}>
               {decodeURIComponent(answers[2])}
             </Text>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={() => onAnswerPress(decodeURIComponent(answers[3]))}
             underlayColor={'#fff'}
-            style={[styles.option, {backgroundColor: changeOptionColor(answers[3])}]}>
-            <Text
-              style={styles.optionText}>
+            style={[
+              styles.option,
+              {backgroundColor: changeOptionColor(answers[3])},
+            ]}
+          >
+            <Text style={styles.optionText}>
               {decodeURIComponent(answers[3])}
             </Text>
           </TouchableHighlight>
@@ -103,21 +116,21 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
 };
 
 const styles = StyleSheet.create({
-    option: {
-        width: width * 0.45,
-        borderRadius: 16,
-        borderColor: 'black',
-        borderWidth: 0.5,
-        minHeight: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    optionText: {
-        fontFamily: 'Rubik',
-        fontWeight: '500',
-        alignSelf: 'center',
-        margin: 20,
-    }
-})
+  option: {
+    width: width * 0.45,
+    borderRadius: 16,
+    borderColor: 'black',
+    borderWidth: 0.5,
+    minHeight: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  optionText: {
+    fontFamily: 'Rubik',
+    fontWeight: '500',
+    alignSelf: 'center',
+    margin: 20,
+  },
+});
 
 export default Answer;

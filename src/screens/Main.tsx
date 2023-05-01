@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Profile from './Profile';
-import { RootStackParamList } from '../models/TabParamsList';
+import {RootStackParamList} from '../models/TabParamsList';
 
 type Props = {};
 

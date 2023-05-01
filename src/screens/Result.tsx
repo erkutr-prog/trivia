@@ -1,11 +1,11 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { AppStackParamList } from '../models/TabParamsList';
+import {View, Text, StyleSheet} from 'react-native';
+import {AppStackParamList} from '../models/TabParamsList';
 
-type ResultProps = NativeStackScreenProps<AppStackParamList, 'GameResult'>
+type ResultProps = NativeStackScreenProps<AppStackParamList, 'GameResult'>;
 
-const Result: React.FC<ResultProps> = ({ route, navigation }) => {
+const Result: React.FC<ResultProps> = ({route, navigation}) => {
   const percentage = (route.params.score / route.params.totalQuestions) * 100;
 
   return (
@@ -15,10 +15,14 @@ const Result: React.FC<ResultProps> = ({ route, navigation }) => {
         <Text style={styles.resultText}>You got</Text>
         <Text style={styles.resultNumber}>{route.params.score.toString()}</Text>
         <Text style={styles.resultText}>out of</Text>
-        <Text style={styles.resultNumber}>{route.params.totalQuestions.toString()}</Text>
+        <Text style={styles.resultNumber}>
+          {route.params.totalQuestions.toString()}
+        </Text>
         <Text style={styles.resultText}>questions right!</Text>
       </View>
-      <Text style={styles.scoreText}>Your score: {percentage.toFixed(2).toString()}%</Text>
+      <Text style={styles.scoreText}>
+        Your score: {percentage.toFixed(2).toString()}%
+      </Text>
     </View>
   );
 };
