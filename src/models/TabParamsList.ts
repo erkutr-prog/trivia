@@ -8,5 +8,6 @@ export type RootStackParamList = {
 export type AppStackParamList = {
     Main: undefined,
     GameOptions: { category: CategoryInformation },
-    Game: { link: string, categoryName: Categories, totalQuestions: number }
+    Game: { link: string, categoryName: Categories, totalQuestions: number, timelimit: Boolean },
+    GameResult: { score: number, totalQuestions: number}
 }

@@ -16,11 +16,12 @@ export type CategoryInformation = {
 export type QuizOptions = {
     numberOfQuestions: number,
     difficulty: Difficulty,
-    quizType: QuestionTypes
+    quizType: QuestionTypes,
+    timelimit: Boolean
 }
 
 export type ActionOptions = {
-    type: 'setNumber' | 'setDifficulty' | 'setQuizType',
+    type: 'setNumber' | 'setDifficulty' | 'setQuizType' | 'setTimeLimit',
     payload: any
 }
 

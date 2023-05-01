@@ -5,6 +5,7 @@ import {AppStackParamList} from '../models/TabParamsList';
 import {Picker} from '@react-native-picker/picker';
 import {ActionOptions, QuizOptions} from '../models/Category';
 import {QuizDifficulty, QuizType} from '../utils/CategoryData';
+import { Switch } from '@react-native-material/core';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'GameOptions'>;
 
@@ -19,6 +20,7 @@ const initialState: QuizOptions = {
   numberOfQuestions: 10,
   difficulty: 'Medium',
   quizType: 'Multiple Choice',
+  timelimit: false
 };
 
 function optionsStateReducer(state: QuizOptions, action: ActionOptions) {
@@ -31,6 +33,10 @@ function optionsStateReducer(state: QuizOptions, action: ActionOptions) {
       return {...state};
     case 'setQuizType':
       state.quizType = action.payload;
+      return {...state}
+    case 'setTimeLimit':
+      state.timelimit = action.payload
+      return {...state}
     default:
       return {...state};
   }
@@ -45,11 +51,23 @@ const GameOptions = ({navigation, route}: Props) => {
 
   const generateUrl = () => {
     const url = `?amount=${state.numberOfQuestions}&category=${route.params.category.category_id}&difficulty=${state.difficulty.toLowerCase()}&type=${mapDifficulty[state.quizType]}&encode=url3986`
-    navigation.navigate('Game', {link: url, categoryName: route.params.category.category, totalQuestions: state.numberOfQuestions})
+    navigation.navigate('Game', {link: url, categoryName: route.params.category.category, totalQuestions: state.numberOfQuestions, timelimit: state.timelimit})
   }
 
   return (
     <ScrollView style={styles.container}>
+      <View style={{flexDirection: 'column'}}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{marginLeft: 24, marginTop: 12, fontWeight: '500', fontFamily: 'Rubik', fontSize: 16}}>
+            Süre sınırı
+          </Text>
+          <Switch
+            style={styles.timeSwitch}
+            value={state.timelimit === undefined ? false : state.timelimit}
+            onValueChange={() => dispatch({type: 'setTimeLimit', payload: !state.timelimit})}
+          />
+        </View>
+      </View>
       <View style={{flex: 5, flexDirection: 'column'}}>
         <Text
           style={styles.header}>
@@ -119,7 +137,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1, 
         flexDirection: 'column',
-        paddingVertical: 40
+        paddingVertical: 12
     },
     header: {
         fontFamily: 'Rubik',
@@ -148,6 +166,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Rubik', 
         fontWeight: '500', 
         color: 'white'
+    },
+    timeSwitch: {
+      marginLeft: 'auto',
+      marginTop: 12,
+      marginRight: 24
     }
 })
 

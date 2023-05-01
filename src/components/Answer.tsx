@@ -13,7 +13,7 @@ type Props = {
   answers: string[];
   type: string;
   correct: string;
-  answerCb: Function
+  answerCb: Function;
 };
 
 const Answer = ({answers, type, correct, answerCb}: Props) => {
@@ -25,7 +25,7 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
         setAnswered(true);
         setSelected(answer);
         setTimeout(() => {
-            answerCb()
+            answerCb(answer === correct_answer)
             setAnswered(false)
             setSelected('')
         }, 800)
