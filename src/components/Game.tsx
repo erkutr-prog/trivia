@@ -1,4 +1,4 @@
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Text, Dimensions, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamList} from '../models/TabParamsList';
@@ -22,6 +22,12 @@ const Game = ({route, navigation}: Props) => {
   const [timeIntervalId, setIntervalId] = useState<number | null>(null);
 
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => LeaveButton()
+    })
+  }, [])
+
+  useEffect(() => {
     if (questionsFetched && route.params.timelimit && !timeIntervalId) {
       const interval = setInterval(() => {
         setCounter(counter => counter + 1);
@@ -30,6 +36,33 @@ const Game = ({route, navigation}: Props) => {
     }
     return () => clearInterval(timeIntervalId as number);
   }, [questionsFetched, route.params.timelimit]);
+
+  const LeaveButton = () => {
+    return (
+      <TouchableOpacity onPress={() => onPressLeave()}>
+        <Text style={{color: 'red'}}>
+          Leave
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+
+  const onPressLeave = () => {
+    Alert.alert(
+      'Warning',
+      'Are you sure you want to leave?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => navigation.goBack()
+        },
+        {
+          text: 'No',
+          onPress: () => console.log("Cancel pressed.")
+        }
+      ]
+    )
+  }
 
   const resetTimer = () => {
     if (timeIntervalId) {
