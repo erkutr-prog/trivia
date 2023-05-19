@@ -1,5 +1,5 @@
 import {View, Text, FlatList} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {cards} from '../utils/CategoryData';
 import {ICategory} from '../models/Category';
 import CategoryCard from '../components/CategoryCard';

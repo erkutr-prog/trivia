@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   NativeStackScreenProps,
   createNativeStackNavigator,
@@ -9,21 +9,69 @@ import GameOptions from '../components/GameOptions';
 import {AppStackParamList} from '../models/TabParamsList';
 import Game from '../components/Game';
 import Result from './Result';
+import * as firebase from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
+import Login from './Login';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Main'>;
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
+const firebaseConfig = {
+  apiKey: '', //YOUR API KEY
+  projectId: 'trivia-62bf5',
+  storageBucket: 'trivia-62bf5.appspot.com',
+  messagingSenderId: '',
+  appId: '1:492789669193:ios:1a9cbf0ea4381b4be98e98',
+  databaseURL: 'https://trivia-62bf5.appspot.com/',
+};
+
 const App = (props: Props) => {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  if (!firebase.firebase.app.length) {
+    var app;
+    if (!firebase.firebase.app.length) {
+      app = firebase.firebase.initializeApp(firebaseConfig);
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(userState => {
+      if (userState) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+    return subscriber;
+  }, []);
+
+  const _login = async (user: firebase.FirebaseAuthTypes.User) => {
+    setLoggedIn(true);
+  };
+
   return (
     <NavigationContainer>
       <AppStack.Navigator screenOptions={{headerShown: false}}>
         <AppStack.Group>
-          <AppStack.Screen name="Main" component={Main} />
+          {isLoggedIn ? (
+            <AppStack.Screen name="Main" component={Main} />
+          ) : (
+            <AppStack.Screen
+              name="Login"
+              initialParams={{loginCb: _login}}
+              component={Login}
+            />
+          )}
         </AppStack.Group>
         <AppStack.Group screenOptions={{headerShown: true}}>
           <AppStack.Screen name="GameOptions" component={GameOptions} />
-          <AppStack.Screen name="Game" component={Game} />
+          <AppStack.Screen
+            name="Game"
+            options={{headerBackVisible: false}}
+            component={Game}
+          />
           <AppStack.Screen name="GameResult" component={Result} />
         </AppStack.Group>
       </AppStack.Navigator>

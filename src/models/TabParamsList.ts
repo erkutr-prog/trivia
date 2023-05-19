@@ -13,6 +13,8 @@ export type AppStackParamList = {
     categoryName: Categories;
     totalQuestions: number;
     timelimit: Boolean;
+    timeLimitValue: number;
   };
   GameResult: {score: number; totalQuestions: number};
+  Login: { loginCb: Function }
 };

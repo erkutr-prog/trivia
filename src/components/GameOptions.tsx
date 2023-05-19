@@ -28,6 +28,7 @@ const initialState: QuizOptions = {
   difficulty: 'Medium',
   quizType: 'Multiple Choice',
   timelimit: false,
+  timeLimitValue: 0
 };
 
 function optionsStateReducer(state: QuizOptions, action: ActionOptions) {
@@ -44,6 +45,8 @@ function optionsStateReducer(state: QuizOptions, action: ActionOptions) {
     case 'setTimeLimit':
       state.timelimit = action.payload;
       return {...state};
+    case 'setTimeLimitValue':
+      state.timeLimitValue = action.payload
     default:
       return {...state};
   }
@@ -67,6 +70,7 @@ const GameOptions = ({navigation, route}: Props) => {
       categoryName: route.params.category.category,
       totalQuestions: state.numberOfQuestions,
       timelimit: state.timelimit,
+      timeLimitValue: state.timeLimitValue
     });
   };
 
@@ -86,6 +90,25 @@ const GameOptions = ({navigation, route}: Props) => {
               dispatch({type: 'setTimeLimit', payload: !state.timelimit})
             }
           />
+        </View>
+        <View style={{display: state.timelimit ? 'flex' : 'none'}}>
+          <Picker
+            style={styles.picker}
+            selectedValue={state.timeLimitValue}
+            itemStyle={{height: 150}}
+            onValueChange={(value, index) => {
+              dispatch({type: 'setTimeLimitValue', payload: value})
+            }}
+          >
+            {[...Array(50).keys()].map((value, index) => (
+              <Picker.Item
+                style={{fontFamily: 'Rubik', fontWeight: 'bold'}}
+                key={index + 1}
+                value={value + 1}
+                label={(value + 1).toString()}
+              />
+            ))}
+          </Picker>
         </View>
       </View>
       <View style={{flex: 5, flexDirection: 'column'}}>
@@ -128,7 +151,7 @@ const GameOptions = ({navigation, route}: Props) => {
           ))}
         </Picker>
       </View>
-      <View style={{flex: 9}}>
+      <View style={{flex: 8}}>
         <Text style={styles.header}>Soru Tipi</Text>
         <Picker
           style={styles.picker}
@@ -180,7 +203,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    top: 50,
+    bottom: 25
   },
   startText: {
     alignSelf: 'center',

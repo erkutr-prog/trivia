@@ -7,6 +7,7 @@ import Answer from './Answer';
 import useQuestions from '../hooks/useQuestions';
 import {ActivityIndicator} from '@react-native-material/core';
 import shuffleArray from '../utils/Helpers';
+import * as Progress from 'react-native-progress'
 
 const {width, height} = Dimensions.get('window');
 
@@ -19,7 +20,11 @@ const Game = ({route, navigation}: Props) => {
   const {questions} = useQuestions(route.params.link, () =>
     setQuestionsFetched(true),
   );
+  const [answers, setAnswers] = useState<string[]>([])
   const [timeIntervalId, setIntervalId] = useState<number | null>(null);
+  const [timerCounter, setTimerCounter] = useState<number>(0);
+  const [timerIntervalId, setTimerIntervalId] = useState<number | null>(null);
+  const timeLimit = route.params.timeLimitValue * 1000
 
   useEffect(() => {
     navigation.setOptions({
@@ -28,13 +33,33 @@ const Game = ({route, navigation}: Props) => {
   }, [])
 
   useEffect(() => {
+    if (questions) {
+      setAnswers(
+        shuffleArray(
+          questions[counter].incorrect_answers.concat(
+            questions[counter].correct_answer,
+          ),
+        )
+      )
+    }
+  }, [questions, counter])
+
+  useEffect(() => {
     if (questionsFetched && route.params.timelimit && !timeIntervalId) {
+      const timerInterval = setInterval(() => {
+        setTimerCounter((timerCounter) => timerCounter + (1000 / timeLimit))
+      }, 1000)
       const interval = setInterval(() => {
         setCounter(counter => counter + 1);
-      }, 5000);
+        setTimerCounter(0)
+      }, timeLimit);
       setIntervalId(interval);
+      setTimerIntervalId(timerInterval);
     }
-    return () => clearInterval(timeIntervalId as number);
+    return () => {
+      clearInterval(timeIntervalId as number)
+      clearInterval(timerIntervalId as number)
+    }
   }, [questionsFetched, route.params.timelimit]);
 
   const LeaveButton = () => {
@@ -69,6 +94,7 @@ const Game = ({route, navigation}: Props) => {
       clearInterval(timeIntervalId as number);
       const newInterval = setInterval(() => {
         setCounter(counter => counter + 1);
+        setTimerCounter(0)
       }, 5000);
       setIntervalId(newInterval);
     }
@@ -85,6 +111,7 @@ const Game = ({route, navigation}: Props) => {
       });
     } else {
       setCounter(counter => counter + 1);
+      setTimerCounter(0)
       resetTimer();
     }
   };
@@ -93,6 +120,10 @@ const Game = ({route, navigation}: Props) => {
     <View style={{flex: 1, flexDirection: 'column'}}>
       {questions ? (
         <>
+          <View style={{ flexDirection: 'column',alignSelf: 'center', justifyContent: 'center', alignItems: 'center', height: 50, display: route.params.timelimit ? 'flex' : 'none', marginHorizontal: 10}}>
+            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: 'red'}}>{(Math.floor(timerCounter * 5)).toString()}</Text>
+            <Progress.Bar progress={timerCounter} width={width - 15} />
+          </View>
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryText}>{route.params.categoryName}</Text>
             <Text style={styles.questionIndexText}>
@@ -107,11 +138,7 @@ const Game = ({route, navigation}: Props) => {
           <View style={{margin: 12}}>
             <Answer
               answerCb={(isCorrect: Boolean) => answerCb(isCorrect)}
-              answers={shuffleArray(
-                questions[counter].incorrect_answers.concat(
-                  questions[counter].correct_answer,
-                ),
-              )}
+              answers={answers}
               type={questions[counter].type}
               correct={questions[counter].correct_answer}
             />

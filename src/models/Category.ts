@@ -26,10 +26,11 @@ export type QuizOptions = {
   difficulty: Difficulty;
   quizType: QuestionTypes;
   timelimit: Boolean;
+  timeLimitValue: number
 };
 
 export type ActionOptions = {
-  type: 'setNumber' | 'setDifficulty' | 'setQuizType' | 'setTimeLimit';
+  type: 'setNumber' | 'setDifficulty' | 'setQuizType' | 'setTimeLimit' | 'setTimeLimitValue';
   payload: any;
 };
 
@@ -44,4 +45,10 @@ export interface QuestionType {
   incorrect_answers: string[];
   question: string;
   type: string;
+}
+
+export interface UserInfo {
+  displayName: string | null,
+  email: string,
+  photoUrl: string
 }
