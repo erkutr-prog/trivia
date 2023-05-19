@@ -16,5 +16,6 @@ export type AppStackParamList = {
     timeLimitValue: number;
   };
   GameResult: {score: number; totalQuestions: number};
-  Login: { loginCb: Function }
+  Login: { loginCb: Function };
+  Profile: undefined
 };

@@ -30,10 +30,7 @@ const App = (props: Props) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   if (!firebase.firebase.app.length) {
-    var app;
-    if (!firebase.firebase.app.length) {
-      app = firebase.firebase.initializeApp(firebaseConfig);
-    }
+    firebase.firebase.initializeApp(firebaseConfig);
   }
 
   useEffect(() => {
