@@ -67,7 +67,7 @@ const Profile = ({route, navigation}: Props) => {
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{userInfo?.email}</Text>
-        <Text style={styles.email}>john.doe@example.com</Text>
+        <Text style={styles.email}>{userInfo?.displayName}</Text>
       </View>
     </View>
   );

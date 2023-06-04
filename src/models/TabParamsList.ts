@@ -17,5 +17,6 @@ export type AppStackParamList = {
   };
   GameResult: {score: number; totalQuestions: number};
   Login: { loginCb: Function };
+  Register: undefined,
   Profile: undefined
 };

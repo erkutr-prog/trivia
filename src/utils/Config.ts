@@ -1,5 +1,6 @@
+import { API_KEY } from '@env'
 export const firebaseConfig = {
-    apiKey: '', //YOUR API KEY
+    apiKey: API_KEY, //YOUR API KEY
     projectId: 'trivia-62bf5',
     storageBucket: 'trivia-62bf5.appspot.com',
     messagingSenderId: '',

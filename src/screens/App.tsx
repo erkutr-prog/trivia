@@ -12,13 +12,15 @@ import Result from './Result';
 import * as firebase from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 import Login from './Login';
+import Register from './Register';
+import { API_KEY } from '@env'
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Main'>;
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const firebaseConfig = {
-  apiKey: '', //YOUR API KEY
+  apiKey: API_KEY, //YOUR API KEY
   projectId: 'trivia-62bf5',
   storageBucket: 'trivia-62bf5.appspot.com',
   messagingSenderId: '',
@@ -55,11 +57,21 @@ const App = (props: Props) => {
           {isLoggedIn ? (
             <AppStack.Screen name="Main" component={Main} />
           ) : (
-            <AppStack.Screen
-              name="Login"
-              initialParams={{loginCb: _login}}
-              component={Login}
-            />
+            <>
+              <AppStack.Screen
+                name="Login"
+                initialParams={{loginCb: _login}}
+                component={Login}
+              />
+              <AppStack.Group
+                screenOptions={{ presentation: 'fullScreenModal', headerShown: true }}
+              >
+                <AppStack.Screen
+                  name='Register'
+                  component={Register}
+                />
+              </AppStack.Group>
+            </>
           )}
         </AppStack.Group>
         <AppStack.Group screenOptions={{headerShown: true}}>

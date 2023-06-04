@@ -68,6 +68,7 @@ const Login = ({route, navigation}: Props) => {
             <Text style={styles.btnText}>Login</Text>
           </TouchableHighlight>
           <TouchableHighlight
+            onPress={() => navigation.navigate('Register')}
             style={[styles.btnContainer, {backgroundColor: '#ACB1D6'}]}>
             <Text style={styles.btnText}>Register</Text>
           </TouchableHighlight>
