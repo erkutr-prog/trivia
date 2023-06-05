@@ -95,12 +95,18 @@ const Game = ({route, navigation}: Props) => {
   const resetTimer = () => {
     if (timeIntervalId) {
       clearInterval(timeIntervalId as number);
+      clearInterval(timerIntervalId as number);
+      const newTimerInterval = setInterval(() => {
+        setTimerCounter((timerCounter) => timerCounter + (1000 / timeLimit))
+        setTimerValue((timerValue) => timerValue + 1)
+      }, 1000)
       const newInterval = setInterval(() => {
         setCounter(counter => counter + 1);
         setTimerCounter(0)
         setTimerValue(0)
-      }, 5000);
+      }, timeLimit);
       setIntervalId(newInterval);
+      setTimerIntervalId(newTimerInterval)
     }
   };
 
@@ -126,7 +132,7 @@ const Game = ({route, navigation}: Props) => {
       {questions ? (
         <>
           <View style={{ flexDirection: 'column',alignSelf: 'center', justifyContent: 'center', alignItems: 'center', height: 50, display: route.params.timelimit ? 'flex' : 'none', marginHorizontal: 10}}>
-            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: 'red'}}>{(timerValue).toString()}</Text>
+            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: 'red'}}>{timerValue.toString()}</Text>
             <Progress.Bar progress={timerCounter} width={width - 15} />
           </View>
           <View style={styles.categoryContainer}>
