@@ -81,7 +81,7 @@ const GameOptions = ({navigation, route}: Props) => {
           <Text
             style={styles.header}
           >
-            Süre sınırı
+            Time Limit
           </Text>
           <Switch
             style={styles.timeSwitch}
@@ -112,7 +112,7 @@ const GameOptions = ({navigation, route}: Props) => {
         </View>
       </View>
       <View style={{flex: 5, flexDirection: 'column'}}>
-        <Text style={styles.header}>Soru Sayısı</Text>
+        <Text style={styles.header}>Number of Questions</Text>
         <Picker
           style={styles.picker}
           selectedValue={state.numberOfQuestions}
@@ -152,7 +152,7 @@ const GameOptions = ({navigation, route}: Props) => {
         </Picker>
       </View>
       <View style={{flex: 8}}>
-        <Text style={styles.header}>Soru Tipi</Text>
+        <Text style={styles.header}>Question Type</Text>
         <Picker
           style={styles.picker}
           selectedValue={state.quizType}

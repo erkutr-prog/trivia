@@ -23,6 +23,7 @@ const Game = ({route, navigation}: Props) => {
   const [answers, setAnswers] = useState<string[]>([])
   const [timeIntervalId, setIntervalId] = useState<number | null>(null);
   const [timerCounter, setTimerCounter] = useState<number>(0);
+  const [timerValue, setTimerValue] = useState<number>(0);
   const [timerIntervalId, setTimerIntervalId] = useState<number | null>(null);
   const timeLimit = route.params.timeLimitValue * 1000
 
@@ -48,10 +49,12 @@ const Game = ({route, navigation}: Props) => {
     if (questionsFetched && route.params.timelimit && !timeIntervalId) {
       const timerInterval = setInterval(() => {
         setTimerCounter((timerCounter) => timerCounter + (1000 / timeLimit))
+        setTimerValue((timerValue) => timerValue + 1)
       }, 1000)
       const interval = setInterval(() => {
         setCounter(counter => counter + 1);
         setTimerCounter(0)
+        setTimerValue(0)
       }, timeLimit);
       setIntervalId(interval);
       setTimerIntervalId(timerInterval);
@@ -95,6 +98,7 @@ const Game = ({route, navigation}: Props) => {
       const newInterval = setInterval(() => {
         setCounter(counter => counter + 1);
         setTimerCounter(0)
+        setTimerValue(0)
       }, 5000);
       setIntervalId(newInterval);
     }
@@ -112,6 +116,7 @@ const Game = ({route, navigation}: Props) => {
     } else {
       setCounter(counter => counter + 1);
       setTimerCounter(0)
+      setTimerValue(0)
       resetTimer();
     }
   };
@@ -121,7 +126,7 @@ const Game = ({route, navigation}: Props) => {
       {questions ? (
         <>
           <View style={{ flexDirection: 'column',alignSelf: 'center', justifyContent: 'center', alignItems: 'center', height: 50, display: route.params.timelimit ? 'flex' : 'none', marginHorizontal: 10}}>
-            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: 'red'}}>{(Math.floor(timerCounter * 5)).toString()}</Text>
+            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: 'red'}}>{(timerValue).toString()}</Text>
             <Progress.Bar progress={timerCounter} width={width - 15} />
           </View>
           <View style={styles.categoryContainer}>

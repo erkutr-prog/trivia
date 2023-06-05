@@ -2,13 +2,13 @@ import { Difficulty } from "../models/Category";
 import { QuestionTypes } from "../models/Category";
 
 const cards = [
-  {
+  /* {
     id: '0',
     title: 'Random',
     description: 'Select a random topic',
     icon: 'shuffle',
     category_id: 'random',
-  },
+  }, */
   {
     id: '1',
     title: 'General Knowledge',
