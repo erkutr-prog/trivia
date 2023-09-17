@@ -14,6 +14,10 @@ import auth from '@react-native-firebase/auth';
 import Login from './Login';
 import Register from './Register';
 import { API_KEY } from '@env'
+import { Provider } from 'react-redux';
+import store from './store';
+import { SheetProvider } from 'react-native-actions-sheet';
+import "./../components/sheets";
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Main'>;
 
@@ -51,40 +55,44 @@ const App = (props: Props) => {
   };
 
   return (
-    <NavigationContainer>
-      <AppStack.Navigator screenOptions={{headerShown: false}}>
-        <AppStack.Group>
-          {isLoggedIn ? (
-            <AppStack.Screen name="Main" component={Main} />
-          ) : (
-            <>
+    <SheetProvider>
+      <Provider store={store}>
+        <NavigationContainer>
+          <AppStack.Navigator screenOptions={{headerShown: false}}>
+            <AppStack.Group>
+              {isLoggedIn ? (
+                <AppStack.Screen name="Main" component={Main} />
+              ) : (
+                <>
+                  <AppStack.Screen
+                    name="Login"
+                    initialParams={{loginCb: _login}}
+                    component={Login}
+                  />
+                  <AppStack.Group
+                    screenOptions={{ presentation: 'fullScreenModal', headerShown: true }}
+                  >
+                    <AppStack.Screen
+                      name='Register'
+                      component={Register}
+                    />
+                  </AppStack.Group>
+                </>
+              )}
+            </AppStack.Group>
+            <AppStack.Group screenOptions={{headerShown: true}}>
+              <AppStack.Screen name="GameOptions" component={GameOptions} />
               <AppStack.Screen
-                name="Login"
-                initialParams={{loginCb: _login}}
-                component={Login}
+                name="Game"
+                options={{headerBackVisible: false}}
+                component={Game}
               />
-              <AppStack.Group
-                screenOptions={{ presentation: 'fullScreenModal', headerShown: true }}
-              >
-                <AppStack.Screen
-                  name='Register'
-                  component={Register}
-                />
-              </AppStack.Group>
-            </>
-          )}
-        </AppStack.Group>
-        <AppStack.Group screenOptions={{headerShown: true}}>
-          <AppStack.Screen name="GameOptions" component={GameOptions} />
-          <AppStack.Screen
-            name="Game"
-            options={{headerBackVisible: false}}
-            component={Game}
-          />
-          <AppStack.Screen name="GameResult" component={Result} />
-        </AppStack.Group>
-      </AppStack.Navigator>
-    </NavigationContainer>
+              <AppStack.Screen name="GameResult" component={Result} />
+            </AppStack.Group>
+          </AppStack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </SheetProvider>
   );
 };
 

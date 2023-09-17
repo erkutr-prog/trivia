@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import optionsSlice from "../features/optionsSlice";
 import userInfoSlice from './../features/userSlice'
 
 const rootReducer = combineReducers({
-    userInfoSlice: userInfoSlice
+    userInfoSlice: userInfoSlice,
+    optionSlice: optionsSlice
 })
 
 export type RootState = ReturnType<typeof rootReducer>
