@@ -10,6 +10,16 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 const Home = ({navigation}: Props) => {
   const HeaderComponent = () => {
+    const today = new Date();
+    const currentHour = today.getHours();
+    var greetingText: string = '';
+    if (currentHour < 12) {
+      greetingText = 'Good Morning! 🌞';
+    } else if (currentHour < 18) {
+      greetingText = 'Good Afternoon! 🌥️';
+    } else {
+      greetingText = 'Good Evening! 🌙';
+    }
     return (
       <View style={{flexDirection: 'column', flex: 1, marginVertical: 16}}>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
@@ -21,7 +31,7 @@ const Home = ({navigation}: Props) => {
               alignSelf: 'flex-start',
               fontFamily: 'Rubik',
             }}>
-            Good Morning! 🌞
+            {greetingText}
           </Text>
         </View>
       </View>
