@@ -1,14 +1,16 @@
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, useColorScheme} from 'react-native';
 import React, { useEffect } from 'react';
 import {cards} from '../utils/CategoryData';
 import {ICategory} from '../models/Category';
 import CategoryCard from '../components/CategoryCard';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList, RootStackParamList } from '../models/TabParamsList';
+import { useTheme } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 const Home = ({navigation}: Props) => {
+  const { colors } = useTheme()
   const HeaderComponent = () => {
     const today = new Date();
     const currentHour = today.getHours();
@@ -26,7 +28,7 @@ const Home = ({navigation}: Props) => {
           <Text
             style={{
               fontWeight: '800',
-              color: '#000',
+              color: colors.text,
               fontSize: 18,
               alignSelf: 'flex-start',
               fontFamily: 'Rubik',
@@ -39,7 +41,7 @@ const Home = ({navigation}: Props) => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background}}>
       <FlatList
         contentContainerStyle={{paddingTop: 10}}
         data={cards}

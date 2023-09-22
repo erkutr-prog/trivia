@@ -4,16 +4,17 @@ import Home from './Home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Profile from './Profile';
 import {RootStackParamList} from '../models/TabParamsList';
-import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import auth from '@react-native-firebase/auth';
+import { useTheme } from '@react-navigation/native';
 
 type Props = {};
 
 const MainFlowTab = createBottomTabNavigator<RootStackParamList>();
 
 const Main = (props: Props) => {
-
+  const { colors } = useTheme();
 
   const handleLogout = () => {
     Alert.alert(
@@ -39,7 +40,7 @@ const Main = (props: Props) => {
   const logoutBtnComponent = () => {
     return (
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Icon name="log-out-outline" size={24} color="#888" style={{marginRight: 10}} />
+        <Icon name="log-out-outline" size={24} color={colors.text} style={{marginRight: 10}} />
       </TouchableOpacity>
     )
   }
@@ -50,7 +51,7 @@ const Main = (props: Props) => {
         name="Home"
         options={{
           tabBarIcon: ({focused}) => (
-            <Ionicons name={focused ? 'home' : 'home-outline'} size={25} />
+            <Ionicons name={focused ? 'home' : 'home-outline'} color={colors.text} size={25} />
           ),
         }}
         component={Home}
@@ -59,7 +60,7 @@ const Main = (props: Props) => {
         name="Profile"
         options={{
           tabBarIcon: ({focused}) => (
-            <Ionicons name={focused ? 'person' : 'person-outline'} size={25} />
+            <Ionicons name={focused ? 'person' : 'person-outline'} color={colors.text} size={25} />
           ),
           headerRight: () => logoutBtnComponent()
         }}

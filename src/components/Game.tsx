@@ -8,12 +8,14 @@ import useQuestions from '../hooks/useQuestions';
 import {ActivityIndicator} from '@react-native-material/core';
 import shuffleArray from '../utils/Helpers';
 import * as Progress from 'react-native-progress'
+import { useTheme } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Game'>;
 
 const Game = ({route, navigation}: Props) => {
+  const { colors } = useTheme()
   const [counter, setCounter] = useState(0);
   const [questionsFetched, setQuestionsFetched] = useState(false);
   const [correctCounter, setCorrectCounter] = useState(0);
@@ -68,7 +70,7 @@ const Game = ({route, navigation}: Props) => {
   const LeaveButton = () => {
     return (
       <TouchableOpacity onPress={() => onPressLeave()}>
-        <Text style={{color: 'red'}}>
+        <Text style={{color: colors.text}}>
           Leave
         </Text>
       </TouchableOpacity>
@@ -132,12 +134,12 @@ const Game = ({route, navigation}: Props) => {
       {questions ? (
         <>
           <View style={{ flexDirection: 'column',alignSelf: 'center', justifyContent: 'center', alignItems: 'center', height: 50, display: route.params.timelimit ? 'flex' : 'none', marginHorizontal: 10}}>
-            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: 'red'}}>{timerValue.toString()}</Text>
+            <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: colors.text}}>{timerValue.toString()}</Text>
             <Progress.Bar progress={timerCounter} width={width - 15} />
           </View>
           <View style={styles.categoryContainer}>
-            <Text style={styles.categoryText}>{route.params.categoryName}</Text>
-            <Text style={styles.questionIndexText}>
+            <Text style={[styles.categoryText, { color: colors.text }]}>{route.params.categoryName}</Text>
+            <Text style={[styles.questionIndexText, { color: colors.text }]}>
               {(counter + 1).toString()} /{' '}
               {route.params.totalQuestions.toString()}
             </Text>

@@ -14,11 +14,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import auth from '@react-native-firebase/auth';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../models/TabParamsList';
+import { useTheme } from '@react-navigation/native';
 type Props = NativeStackScreenProps<AppStackParamList, 'Login'>
 
 const {width, height} = Dimensions.get('window');
 
 const Login = ({route, navigation}: Props) => {
+  const { colors } = useTheme()
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -37,40 +39,40 @@ const Login = ({route, navigation}: Props) => {
     <View style={{flex: 1}}>
       <LinearGradient
         style={{flex: 1}}
-        colors={['#8294C4', '#ACB1D6', '#FFEAD2']}>
+        colors={[colors.background, colors.card, colors.text]}>
         <SafeAreaView style={styles.container}>
           <Icon
             name="question-answer"
             size={100}
-            color={'#FFF8D6'}
+            color={colors.text}
             style={{marginBottom: 50}}
           />
-          <View style={styles.textInputContainer}>
+          <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2.5, borderColor: colors.border }]}>
             <TextInput
               placeholder="E-mail"
-              placeholderTextColor={'#ACB1D6'}
-              style={{marginLeft: 10}}
+              placeholderTextColor={colors.text}
+              style={{marginLeft: 10, color: colors.text }}
               onChangeText={(text) => setMail(text)}
             />
           </View>
-          <View style={styles.textInputContainer}>
+          <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2.5, borderColor: colors.border }]}>
             <TextInput
               placeholder="Password"
-              placeholderTextColor={'#ACB1D6'}
-              style={{marginLeft: 10}}
+              placeholderTextColor={colors.text}
+              style={{marginLeft: 10, color: colors.text}}
               secureTextEntry
               onChangeText={(text) => setPassword(text)}
             />
           </View>
           <TouchableHighlight
             onPress={() => onLogin()}
-            style={[styles.btnContainer, {backgroundColor: '#8294C4'}]}>
-            <Text style={styles.btnText}>Login</Text>
+            style={[styles.btnContainer, {backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border}]}>
+            <Text style={[styles.btnText, { color: colors.text }]}>Login</Text>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={() => navigation.navigate('Register')}
-            style={[styles.btnContainer, {backgroundColor: '#ACB1D6'}]}>
-            <Text style={styles.btnText}>Register</Text>
+            style={[styles.btnContainer, {backgroundColor: colors.border}]}>
+            <Text style={[styles.btnText, { color: colors.text }]}>Register</Text>
           </TouchableHighlight>
         </SafeAreaView>
       </LinearGradient>
@@ -90,8 +92,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width * 0.75,
     borderWidth: 1,
-    borderColor: '#ACB1D6',
-    backgroundColor: '#FFEAD2',
     borderRadius: 8,
     marginBottom: 20,
   },
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   btnText: {
-    color: '#FFEAD2',
     fontFamily: 'Rubik',
     fontSize: 16,
     fontWeight: '500',

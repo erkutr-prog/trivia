@@ -1,5 +1,6 @@
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import React from 'react';
+import { useTheme } from '@react-navigation/native';
 
 type Props = {
   questionText: string;
@@ -8,11 +9,12 @@ type Props = {
 const {width, height} = Dimensions.get('window');
 
 const Question = ({questionText}: Props) => {
+  const { colors } = useTheme();
   return (
     <View
-      style={styles.container}>
+      style={[styles.container, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
       <Text
-        style={styles.questionText}>
+        style={[styles.questionText, { color: colors.text, borderWidth: 2 }]}>
         {decodeURIComponent(questionText)}
       </Text>
     </View>

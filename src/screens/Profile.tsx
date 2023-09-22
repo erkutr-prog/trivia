@@ -7,11 +7,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../models/TabParamsList';
 import ImageModal from 'react-native-image-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { useTheme } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Profile'>
 
 const Profile = ({route, navigation}: Props) => {
   const [userInfo, setUserInfo] = useState<FirebaseAuthTypes.User>()
+  const { colors } = useTheme();
 
   const initializeApp = async() => {
     await firebase.initializeApp(firebaseConfig)
@@ -66,8 +68,8 @@ const Profile = ({route, navigation}: Props) => {
         />
       </View>
       <View style={styles.detailsContainer}>
-        <Text style={styles.name}>{userInfo?.email}</Text>
-        <Text style={styles.email}>{userInfo?.displayName}</Text>
+        <Text style={[styles.name, { color: colors.text }]}>{userInfo?.email}</Text>
+        <Text style={[styles.email, { color: colors.text }]}>{userInfo?.displayName}</Text>
       </View>
     </View>
   );
@@ -99,7 +101,6 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 16,
-    color: '#888',
   },
 });
 

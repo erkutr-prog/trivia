@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ICategory} from '../models/Category';
+import { useTheme } from '@react-navigation/native';
 
 type Props = {
   cardData: ICategory;
@@ -17,20 +18,21 @@ type Props = {
 const {width, height} = Dimensions.get('window');
 
 const CategoryCard = (props: Props) => {
+  const { colors } = useTheme() 
   return (
-    <TouchableOpacity onPress={() => props.onPress()} activeOpacity={1} style={styles.container}>
+    <TouchableOpacity onPress={() => props.onPress()} activeOpacity={1} style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 2 }]}>
       <>
         <View style={styles.iconContainer}>
           <Ionicons
             style={{alignSelf: 'center'}}
             name={props.cardData.icon}
             size={25}
-            color={'#000'}
+            color={colors.text}
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.titleText}>{props.cardData.title}</Text>
-          <Text style={styles.descriptionText}>
+          <Text style={[styles.titleText, { color: colors.text }]}>{props.cardData.title}</Text>
+          <Text style={[styles.descriptionText, { color: colors.text }]}>
             {props.cardData.description}
           </Text>
         </View>
@@ -41,7 +43,6 @@ const CategoryCard = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
     flex: 1,
     flexDirection: 'row',
     height: 70,

@@ -6,6 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import React, {useState} from 'react';
+import { useTheme } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const Answer = ({answers, type, correct, answerCb}: Props) => {
+  const { colors } = useTheme();
   const [answered, setAnswered] = useState(false);
   const [selected, setSelected] = useState<string>('');
   const correct_answer = decodeURIComponent(correct);
@@ -34,7 +36,7 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
 
   const changeOptionColor = (answer: string) => {
     if (!answered) {
-      return 'beige';
+      return colors.card;
     }
     if (decodeURIComponent(answer) !== decodeURIComponent(selected)) {
       if (correct_answer == decodeURIComponent(answer)) {
@@ -63,10 +65,10 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
           underlayColor={'#fff'}
           style={[
             styles.option,
-            {backgroundColor: changeOptionColor(answers[0])},
+            {backgroundColor: changeOptionColor(answers[0]), borderWidth: 2, borderColor: colors.border},
           ]}
         >
-          <Text style={styles.optionText}>
+          <Text style={[styles.optionText, { color: colors.text }]}>
             {decodeURIComponent(answers[0])}
           </Text>
         </TouchableHighlight>
@@ -75,10 +77,10 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
           underlayColor={'#fff'}
           style={[
             styles.option,
-            {backgroundColor: changeOptionColor(answers[1])},
+            {backgroundColor: changeOptionColor(answers[1]), borderWidth: 2, borderColor: colors.border},
           ]}
         >
-          <Text style={styles.optionText}>
+          <Text style={[styles.optionText, { color: colors.text }]}>
             {decodeURIComponent(answers[1])}
           </Text>
         </TouchableHighlight>
@@ -90,10 +92,10 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
             underlayColor={'#fff'}
             style={[
               styles.option,
-              {backgroundColor: changeOptionColor(answers[2])},
+              {backgroundColor: changeOptionColor(answers[2]), borderWidth: 2, borderColor: colors.border},
             ]}
           >
-            <Text style={styles.optionText}>
+            <Text style={[styles.optionText, { color: colors.text }]}>
               {decodeURIComponent(answers[2])}
             </Text>
           </TouchableHighlight>
@@ -102,10 +104,10 @@ const Answer = ({answers, type, correct, answerCb}: Props) => {
             underlayColor={'#fff'}
             style={[
               styles.option,
-              {backgroundColor: changeOptionColor(answers[3])},
+              {backgroundColor: changeOptionColor(answers[3]), borderWidth: 2, borderColor: colors.border},
             ]}
           >
-            <Text style={styles.optionText}>
+            <Text style={[styles.optionText, { color: colors.text}]}>
               {decodeURIComponent(answers[3])}
             </Text>
           </TouchableHighlight>
@@ -119,7 +121,6 @@ const styles = StyleSheet.create({
   option: {
     width: width * 0.45,
     borderRadius: 16,
-    borderColor: 'black',
     borderWidth: 0.5,
     minHeight: 50,
     justifyContent: 'center',
