@@ -1,17 +1,18 @@
-import { View, Text, TouchableHighlight, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, TouchableHighlight, StyleSheet, Dimensions, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { AppStackParamList } from '../models/TabParamsList'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { TextInput } from '@react-native-material/core'
 import auth, { firebase } from '@react-native-firebase/auth'
 import { firebaseConfig } from '../utils/Config'
+import { useTheme } from '@react-navigation/native'
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Register'>
 
 const { width } = Dimensions.get('window')
 
 const Register = ({route, navigation}: Props) => {
+    const { colors } = useTheme();
     const [mail, setMail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [displayName, setDisplayName] = useState<string>('')
@@ -30,8 +31,8 @@ const Register = ({route, navigation}: Props) => {
 
     const backButton = () => {
         return (
-            <TouchableHighlight underlayColor={'#DDDD'} onPress={() => navigation.goBack()}>
-                <Icon name='close-outline' size={35} color={'black'}/>
+            <TouchableHighlight underlayColor={colors.background} onPress={() => navigation.goBack()}>
+                <Icon name='close-outline' size={35} color={colors.text}/>
             </TouchableHighlight>
         )
     }
@@ -54,38 +55,41 @@ const Register = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textInputContainer}>
+      <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
         <TextInput
           placeholder="Name"
-          placeholderTextColor={'#ACB1D6'}
+          placeholderTextColor={colors.text}
           onChangeText={(text) => setDisplayName(text)}
           value={displayName}
           maxLength={32}
+          style={{color: colors.text, margin: 10}}
         />
       </View>
-      <View style={styles.textInputContainer}>
+      <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
         <TextInput
           placeholder="E-mail"
-          placeholderTextColor={'#ACB1D6'}
+          placeholderTextColor={colors.text}
           onChangeText={(text) => setMail(text)}
           value={mail}
           maxLength={64}
+          style={{color: colors.text, margin: 10}}
         />
       </View>
-      <View style={styles.textInputContainer}>
+      <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
         <TextInput
           placeholder="Password"
           secureTextEntry
-          placeholderTextColor={'#ACB1D6'}
+          placeholderTextColor={colors.text}
           onChangeText={(text) => setPassword(text)}
           value={password}
           maxLength={48}
+          style={{color: colors.text, margin: 10}}
         />
       </View>
       <TouchableHighlight
         onPress={() => _onRegister()}
-        style={[styles.btnContainer, {backgroundColor: '#ACB1D6'}]}>
-          <Text style={styles.btnText}>Register</Text>
+        style={[styles.btnContainer, {backgroundColor: colors.border,}]}>
+          <Text style={[styles.btnText, { color: colors.text }]}>Register</Text>
       </TouchableHighlight>
     </View>
   )
@@ -103,8 +107,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width * 0.75,
     borderWidth: 1,
-    borderColor: '#ACB1D6',
-    backgroundColor: '#FFEAD2',
     borderRadius: 8,
     marginBottom: 20,
   },
@@ -117,7 +119,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   btnText: {
-    color: '#FFEAD2',
     fontFamily: 'Rubik',
     fontSize: 16,
     fontWeight: '500',

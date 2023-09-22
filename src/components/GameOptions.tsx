@@ -24,6 +24,7 @@ import {
   setDifficulty,
   setTimeLimit,
 } from '../features/optionsSlice';
+import { useTheme } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'GameOptions'>;
 
@@ -37,6 +38,7 @@ const mapDifficulty = {
 const GameOptions = ({navigation, route}: Props) => {
   const screenState = useSelector((state: RootState) => state.optionSlice);
   const dispatch = useDispatch<AppDispatch>();
+  const { colors } = useTheme();
 
   useEffect(() => {
     navigation.setOptions({title: route.params.category.category});
@@ -68,8 +70,8 @@ const GameOptions = ({navigation, route}: Props) => {
           margin: 12,
           marginLeft: 'auto',
         }}>
-        <Text style={styles.optionText}>{value}</Text>
-        <Icon name="chevron-down-outline" size={20} style={{margin: 8}} />
+        <Text style={[styles.optionText, { color: colors.text }]}>{value}</Text>
+        <Icon name="chevron-down-outline" size={20} style={{margin: 8, color: colors.text}} />
       </TouchableOpacity>
     );
   };
@@ -77,7 +79,7 @@ const GameOptions = ({navigation, route}: Props) => {
   const timeLimitPickerComponent = () => {
     return (
       <Picker
-        style={styles.picker}
+        style={[styles.picker, { backgroundColor: colors.card }]}
         selectedValue={screenState.timeLimitValue}
         itemStyle={{height: 150}}
         onValueChange={(value, index) => {
@@ -89,6 +91,7 @@ const GameOptions = ({navigation, route}: Props) => {
             key={index + 1}
             value={value + 1}
             label={(value + 1).toString()}
+            color={colors.text}
           />
         ))}
       </Picker>
@@ -108,6 +111,7 @@ const GameOptions = ({navigation, route}: Props) => {
             key={index + 1}
             value={value + 1}
             label={(value + 1).toString()}
+            color={colors.text}
           />
         ))}
       </Picker>
@@ -127,6 +131,7 @@ const GameOptions = ({navigation, route}: Props) => {
             key={index}
             value={value}
             label={value}
+            color={colors.text}
           />
         ))}
       </Picker>
@@ -149,6 +154,7 @@ const GameOptions = ({navigation, route}: Props) => {
             key={index}
             value={value}
             label={value}
+            color={colors.text}
           />
         ))}
       </Picker>
@@ -159,7 +165,7 @@ const GameOptions = ({navigation, route}: Props) => {
     <ScrollView style={styles.container}>
       <View style={{flexDirection: 'column'}}>
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.header}>Time Limit</Text>
+          <Text style={[styles.header, { color: colors.text }]}>Time Limit</Text>
           <Switch
             style={styles.timeSwitch}
             value={
@@ -175,7 +181,7 @@ const GameOptions = ({navigation, route}: Props) => {
             display: screenState.timelimit ? 'flex' : 'none',
             flexDirection: 'row',
           }}>
-          <Text style={styles.header}>Time Limit Value</Text>
+          <Text style={[styles.header, { color: colors.text}]}>Time Limit Value</Text>
           {optionText(
             screenState.timeLimitValue.toString(),
             'timeLimitValuePicker',
@@ -187,7 +193,7 @@ const GameOptions = ({navigation, route}: Props) => {
         </View>
       </View>
       <View style={{flex: 5, flexDirection: 'row'}}>
-        <Text style={styles.header}>Number of Questions</Text>
+        <Text style={[styles.header, { color: colors.text }]}>Number of Questions</Text>
         {optionText(
           screenState.numberOfQuestions.toString(),
           'numberofQuestionsPicker',
@@ -198,7 +204,7 @@ const GameOptions = ({navigation, route}: Props) => {
         />
       </View>
       <View style={{flex: 6, flexDirection: 'row'}}>
-        <Text style={styles.header}>Difficulty</Text>
+        <Text style={[styles.header, { color: colors.text }]}>Difficulty</Text>
         {optionText(screenState.difficulty.toString(), 'difficultyPicker')}
         <PickerSheet
           sheetId="difficultyPicker"
@@ -206,7 +212,7 @@ const GameOptions = ({navigation, route}: Props) => {
         />
       </View>
       <View style={{flex: 8, flexDirection: 'row', marginBottom: 40}}>
-        <Text style={styles.header}>Question Type</Text>
+        <Text style={[styles.header, { color: colors.text }]}>Question Type</Text>
         {optionText(screenState.quizType.toString(), 'questionTypePicker')}
         <PickerSheet
           sheetId="questionTypePicker"
@@ -235,7 +241,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Rubik',
     fontSize: 16,
     fontWeight: '500',
-    color: 'black',
     marginLeft: 24,
   },
   picker: {

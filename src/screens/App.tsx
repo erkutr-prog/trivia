@@ -3,7 +3,7 @@ import {
   NativeStackScreenProps,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer, DarkTheme} from '@react-navigation/native';
 import Main from './Main';
 import GameOptions from '../components/GameOptions';
 import {AppStackParamList} from '../models/TabParamsList';
@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { SheetProvider } from 'react-native-actions-sheet';
 import "./../components/sheets";
+import { useColorScheme } from 'react-native';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Main'>;
 
@@ -34,6 +35,7 @@ const firebaseConfig = {
 
 const App = (props: Props) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const theme = useColorScheme();
 
   if (!firebase.firebase.app.length) {
     firebase.firebase.initializeApp(firebaseConfig);
@@ -57,7 +59,7 @@ const App = (props: Props) => {
   return (
     <SheetProvider>
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
           <AppStack.Navigator screenOptions={{headerShown: false}}>
             <AppStack.Group>
               {isLoggedIn ? (
