@@ -84,7 +84,7 @@ const GameOptions = ({navigation, route}: Props) => {
   const timeLimitPickerComponent = () => {
     return (
       <Picker
-        style={[styles.picker, {backgroundColor: colors.card}]}
+        style={[styles.picker, { backgroundColor: colors.card }]}
         selectedValue={screenState.timeLimitValue}
         itemStyle={{height: 150}}
         onValueChange={(value, index) => {
@@ -106,7 +106,7 @@ const GameOptions = ({navigation, route}: Props) => {
   const numberOfQuestionsPickerComponent = () => {
     return (
       <Picker
-        style={styles.picker}
+        style={[styles.picker, { backgroundColor: colors.card }]}
         selectedValue={screenState.numberOfQuestions}
         itemStyle={{height: 150}}
         onValueChange={(value, index) => dispatch(setNumberOfQuestions(value))}>
@@ -126,7 +126,7 @@ const GameOptions = ({navigation, route}: Props) => {
   const difficultyPickerComponent = () => {
     return (
       <Picker
-        style={styles.picker}
+        style={[styles.picker, { backgroundColor: colors.card }]}
         selectedValue={screenState.difficulty}
         itemStyle={{height: 150}}
         onValueChange={value => dispatch(setDifficulty(value))}>
@@ -146,7 +146,7 @@ const GameOptions = ({navigation, route}: Props) => {
   const questionTypePickerComponent = () => {
     return (
       <Picker
-        style={styles.picker}
+        style={[styles.picker, { backgroundColor: colors.card }]}
         selectedValue={screenState.quizType}
         itemStyle={{height: 150}}
         onValueChange={(value, index) =>
@@ -168,7 +168,7 @@ const GameOptions = ({navigation, route}: Props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{flexDirection: 'column'}}>
+      <View style={{flexDirection: 'column', paddingBottom: 10}}>
         <View style={{flexDirection: 'row'}}>
           <Text style={[styles.header, {color: colors.text}]}>Time Limit</Text>
           <Switch
@@ -205,7 +205,7 @@ const GameOptions = ({navigation, route}: Props) => {
           )}
         </View>
       </View>
-      <View style={{flex: 5, flexDirection: 'row'}}>
+      <View style={{flex: 5, flexDirection: 'row', paddingBottom: 10}}>
         <Text style={[styles.header, {color: colors.text}]}>
           Number of Questions:
         </Text>
@@ -224,7 +224,7 @@ const GameOptions = ({navigation, route}: Props) => {
           <>{numberOfQuestionsPickerComponent()}</>
         )}
       </View>
-      <View style={{flex: 6, flexDirection: 'row'}}>
+      <View style={{flex: 6, flexDirection: 'row', paddingBottom: 10}}>
         <Text style={[styles.header, {color: colors.text}]}>Difficulty:</Text>
         {Platform.OS === 'ios' ? (
           <>
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
   picker: {
-    width: width * 0.4,
+    width: Platform.OS === 'android' ? width * 0.4 : width - 10,
     marginLeft: 'auto',
     alignSelf: 'center',
   },

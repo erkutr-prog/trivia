@@ -14,7 +14,7 @@ const Question = ({questionText}: Props) => {
     <View
       style={[styles.container, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
       <Text
-        style={[styles.questionText, { color: colors.text, borderWidth: 2 }]}>
+        style={[styles.questionText, { color: colors.text }]}>
         {decodeURIComponent(questionText)}
       </Text>
     </View>
