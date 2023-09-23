@@ -62,7 +62,7 @@ const Register = ({route, navigation}: Props) => {
           onChangeText={(text) => setDisplayName(text)}
           value={displayName}
           maxLength={32}
-          style={{color: colors.text, margin: 10}}
+          style={{color: colors.text, marginHorizontal: 10}}
         />
       </View>
       <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
@@ -72,7 +72,7 @@ const Register = ({route, navigation}: Props) => {
           onChangeText={(text) => setMail(text)}
           value={mail}
           maxLength={64}
-          style={{color: colors.text, margin: 10}}
+          style={{color: colors.text, marginHorizontal: 10}}
         />
       </View>
       <View style={[styles.textInputContainer, { backgroundColor: colors.card, borderWidth: 2, borderColor: colors.border }]}>
@@ -83,7 +83,7 @@ const Register = ({route, navigation}: Props) => {
           onChangeText={(text) => setPassword(text)}
           value={password}
           maxLength={48}
-          style={{color: colors.text, margin: 10}}
+          style={{color: colors.text, marginHorizontal: 10}}
         />
       </View>
       <TouchableHighlight

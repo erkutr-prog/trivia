@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -24,7 +25,7 @@ import {
   setDifficulty,
   setTimeLimit,
 } from '../features/optionsSlice';
-import { useTheme } from '@react-navigation/native';
+import {useTheme} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'GameOptions'>;
 
@@ -38,7 +39,7 @@ const mapDifficulty = {
 const GameOptions = ({navigation, route}: Props) => {
   const screenState = useSelector((state: RootState) => state.optionSlice);
   const dispatch = useDispatch<AppDispatch>();
-  const { colors } = useTheme();
+  const {colors} = useTheme();
 
   useEffect(() => {
     navigation.setOptions({title: route.params.category.category});
@@ -70,8 +71,12 @@ const GameOptions = ({navigation, route}: Props) => {
           margin: 12,
           marginLeft: 'auto',
         }}>
-        <Text style={[styles.optionText, { color: colors.text }]}>{value}</Text>
-        <Icon name="chevron-down-outline" size={20} style={{margin: 8, color: colors.text}} />
+        <Text style={[styles.optionText, {color: colors.text}]}>{value}</Text>
+        <Icon
+          name="chevron-down-outline"
+          size={20}
+          style={{margin: 8, color: colors.text}}
+        />
       </TouchableOpacity>
     );
   };
@@ -79,7 +84,7 @@ const GameOptions = ({navigation, route}: Props) => {
   const timeLimitPickerComponent = () => {
     return (
       <Picker
-        style={[styles.picker, { backgroundColor: colors.card }]}
+        style={[styles.picker, {backgroundColor: colors.card}]}
         selectedValue={screenState.timeLimitValue}
         itemStyle={{height: 150}}
         onValueChange={(value, index) => {
@@ -165,7 +170,7 @@ const GameOptions = ({navigation, route}: Props) => {
     <ScrollView style={styles.container}>
       <View style={{flexDirection: 'column'}}>
         <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.header, { color: colors.text }]}>Time Limit</Text>
+          <Text style={[styles.header, {color: colors.text}]}>Time Limit</Text>
           <Switch
             style={styles.timeSwitch}
             value={
@@ -181,43 +186,73 @@ const GameOptions = ({navigation, route}: Props) => {
             display: screenState.timelimit ? 'flex' : 'none',
             flexDirection: 'row',
           }}>
-          <Text style={[styles.header, { color: colors.text}]}>Time Limit Value</Text>
-          {optionText(
-            screenState.timeLimitValue.toString(),
-            'timeLimitValuePicker',
+          <Text style={[styles.header, {color: colors.text}]}>
+            Time Limit Value:
+          </Text>
+          {Platform.OS === 'ios' ? (
+            <>
+              {optionText(
+                screenState.timeLimitValue.toString(),
+                'timeLimitValuePicker',
+              )}
+              <PickerSheet
+                sheetId="timeLimitValuePicker"
+                pickerComponent={timeLimitPickerComponent()}
+              />
+            </>
+          ) : (
+            <>{timeLimitPickerComponent()}</>
           )}
-          <PickerSheet
-            sheetId="timeLimitValuePicker"
-            pickerComponent={timeLimitPickerComponent()}
-          />
         </View>
       </View>
       <View style={{flex: 5, flexDirection: 'row'}}>
-        <Text style={[styles.header, { color: colors.text }]}>Number of Questions</Text>
-        {optionText(
-          screenState.numberOfQuestions.toString(),
-          'numberofQuestionsPicker',
+        <Text style={[styles.header, {color: colors.text}]}>
+          Number of Questions:
+        </Text>
+        {Platform.OS === 'ios' ? (
+          <>
+            {optionText(
+              screenState.numberOfQuestions.toString(),
+              'numberofQuestionsPicker',
+            )}
+            <PickerSheet
+              sheetId="numberofQuestionsPicker"
+              pickerComponent={numberOfQuestionsPickerComponent()}
+            />
+          </>
+        ) : (
+          <>{numberOfQuestionsPickerComponent()}</>
         )}
-        <PickerSheet
-          sheetId="numberofQuestionsPicker"
-          pickerComponent={numberOfQuestionsPickerComponent()}
-        />
       </View>
       <View style={{flex: 6, flexDirection: 'row'}}>
-        <Text style={[styles.header, { color: colors.text }]}>Difficulty</Text>
-        {optionText(screenState.difficulty.toString(), 'difficultyPicker')}
-        <PickerSheet
-          sheetId="difficultyPicker"
-          pickerComponent={difficultyPickerComponent()}
-        />
+        <Text style={[styles.header, {color: colors.text}]}>Difficulty:</Text>
+        {Platform.OS === 'ios' ? (
+          <>
+            {optionText(screenState.difficulty.toString(), 'difficultyPicker')}
+            <PickerSheet
+              sheetId="difficultyPicker"
+              pickerComponent={difficultyPickerComponent()}
+            />
+          </>
+        ) : (
+          <>{difficultyPickerComponent()}</>
+        )}
       </View>
       <View style={{flex: 8, flexDirection: 'row', marginBottom: 40}}>
-        <Text style={[styles.header, { color: colors.text }]}>Question Type</Text>
-        {optionText(screenState.quizType.toString(), 'questionTypePicker')}
-        <PickerSheet
-          sheetId="questionTypePicker"
-          pickerComponent={questionTypePickerComponent()}
-        />
+        <Text style={[styles.header, {color: colors.text}]}>
+          Question Type:
+        </Text>
+        {Platform.OS === 'ios' ? (
+          <>
+            {optionText(screenState.quizType.toString(), 'questionTypePicker')}
+            <PickerSheet
+              sheetId="questionTypePicker"
+              pickerComponent={questionTypePickerComponent()}
+            />
+          </>
+        ) : (
+          <>{questionTypePickerComponent()}</>
+        )}
       </View>
       <TouchableOpacity style={styles.startBtn} onPress={() => generateUrl()}>
         <Text style={styles.startText}>Start</Text>
@@ -233,8 +268,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   header: {
-    fontSize: 20,
-    fontWeight: '900',
+    fontSize: 18,
+    fontFamily: 'Rubik',
+    fontWeight: '700',
     alignSelf: 'center',
   },
   optionText: {
@@ -244,7 +280,8 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
   picker: {
-    width: width - 10,
+    width: width * 0.4,
+    marginLeft: 'auto',
     alignSelf: 'center',
   },
   startBtn: {
