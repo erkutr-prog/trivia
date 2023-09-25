@@ -18,7 +18,7 @@ const Game = ({route, navigation}: Props) => {
   const { colors } = useTheme()
   const [counter, setCounter] = useState(0);
   const [questionsFetched, setQuestionsFetched] = useState(false);
-  const [correctCounter, setCorrectCounter] = useState(0);
+  const correctCounterRef = useRef<number>(0);
   const {questions} = useQuestions(route.params.link, () =>
     setQuestionsFetched(true),
   );
@@ -114,11 +114,11 @@ const Game = ({route, navigation}: Props) => {
 
   const answerCb = (isCorrect: Boolean) => {
     if (isCorrect) {
-      setCorrectCounter(correctCounter => correctCounter + 1);
+      correctCounterRef.current += 1;
     }
     if (counter + 1 == questions?.length) {
       navigation.replace('GameResult', {
-        score: correctCounter,
+        score: correctCounterRef.current,
         totalQuestions: questions.length,
       });
     } else {
