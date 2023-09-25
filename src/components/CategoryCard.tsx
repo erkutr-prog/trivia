@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    height: 70,
     width: width - 15,
     marginBottom: 16,
     borderRadius: 16,
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexDirection: 'column',
-    marginTop: 10,
+    marginVertical: 10
   },
   titleText: {
     flex: 1 / 3,
