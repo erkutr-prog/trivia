@@ -39,24 +39,31 @@ const cards = [
   },
   {
     id: '5',
-    title: 'Art',
-    description: 'Art challenge',
-    icon: 'brush-outline',
-    category_id: '25',
-  },
-  {
-    id: '6',
     title: 'Books',
     description: 'For the bookworms!',
     icon: 'book-outline',
     category_id: '10',
   },
   {
-    id: '7',
+    id: '6',
     title: 'Animals',
     description: 'We love animals',
     icon: 'paw-outline',
     category_id: '27',
+  },
+  {
+    id: '7',
+    title: 'Video Games',
+    description: 'We love to play!',
+    icon: 'game-controller-outline',
+    category_id: '15',
+  },
+  {
+    id: '8',
+    title: 'Vehicles',
+    description: 'For car lovers!',
+    icon: 'car-sport-outline',
+    category_id: '28',
   },
 ];
 

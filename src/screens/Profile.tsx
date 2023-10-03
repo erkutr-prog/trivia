@@ -204,6 +204,7 @@ const Profile = ({route, navigation}: Props) => {
           <PickerSheet
           sheetId="them-picker"
           pickerComponent={themePickerComponent()}
+          style={{height: 300}}
         />
         }
     </View>
