@@ -50,5 +50,11 @@ export interface QuestionType {
 export interface UserInfo {
   displayName: string | null,
   email: string,
-  photoUrl: string
+  photoUrl: string,
 }
+
+export interface SettingsInfo {
+  darkTheme: ThemeState
+}
+
+export type ThemeState = 'dark' | 'light' | 'system'

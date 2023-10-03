@@ -11,7 +11,7 @@ const PickerSheet = ({pickerComponent, sheetId}: Props) => {
   const {colors} = useTheme()
 
   return (
-    <ActionSheet containerStyle={{height: 200, backgroundColor: colors.card}} id={sheetId}>
+    <ActionSheet containerStyle={{height: 300, backgroundColor: colors.card}} id={sheetId}>
         {pickerComponent}
     </ActionSheet>
   );
