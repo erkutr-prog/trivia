@@ -36,7 +36,7 @@ const Game = ({route, navigation}: Props) => {
   }, [])
 
   useEffect(() => {
-    if (questions) {
+    if (questions !== undefined && questions.length > 0) {
       setAnswers(
         shuffleArray(
           questions[counter].incorrect_answers.concat(
@@ -48,6 +48,21 @@ const Game = ({route, navigation}: Props) => {
   }, [questions, counter])
 
   useEffect(() => {
+    if (questionsFetched) {
+      if (questions === undefined || questions.length === 0) {
+        Alert.alert(
+          'Hata',
+          'There is no question in this topic at the moment. Please try again later.',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation.goBack()
+            }
+          ]
+        )
+        return;
+      }
+    }
     if (questionsFetched && route.params.timelimit && !timeIntervalId) {
       const timerInterval = setInterval(() => {
         setTimerCounter((timerCounter) => timerCounter + (1000 / timeLimit))
@@ -131,7 +146,7 @@ const Game = ({route, navigation}: Props) => {
 
   return (
     <View style={{flex: 1, flexDirection: 'column'}}>
-      {questions ? (
+      {questions !== undefined && questions.length > 0 ? (
         <>
           <View style={{ flexDirection: 'column',alignSelf: 'center', justifyContent: 'center', alignItems: 'center', height: 50, display: route.params.timelimit ? 'flex' : 'none', marginHorizontal: 10}}>
             <Text style={{marginRight: 'auto', fontSize: 16, fontWeight: '500', fontFamily: 'Rubik', color: colors.text}}>{timerValue.toString()}</Text>
