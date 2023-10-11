@@ -156,7 +156,7 @@ const Game = ({route, navigation}: Props) => {
             <Text style={[styles.categoryText, { color: colors.text }]}>{route.params.categoryName}</Text>
             <Text style={[styles.questionIndexText, { color: colors.text }]}>
               {(counter + 1).toString()} /{' '}
-              {route.params.totalQuestions.toString()}
+              {questions.length.toString()}
             </Text>
           </View>
 
